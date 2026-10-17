@@ -1,0 +1,257 @@
+/* ================================================================
+   CALCULADORA — grafite quente com laranja, fonte condensada
+   e faixas inclinadas no fundo
+   ================================================================ */
+
+:root {
+  --fundo: #0c0a09;
+  --laranja: #ff6b2c;
+  --laranja-tinta: #140a05;
+  --texto: #fafaf9;
+  --suave: #a8a29e;
+  --apagado: #78716c;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --corpo: "Barlow", system-ui, sans-serif;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: linear-gradient(135deg, #0c0a09, #1a120d 55%, #100e0d);
+  color: var(--texto);
+  font-family: var(--corpo);
+  -webkit-font-smoothing: antialiased;
+  /* clip: as faixas inclinadas não criam rolagem para o lado */
+  overflow-x: hidden;
+  overflow-x: clip;
+  position: relative;
+  isolation: isolate;
+}
+
+/* faixas diagonais de fundo */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: -10%;
+  bottom: -10%;
+  width: 22%;
+  background: rgb(255 107 44 / 0.07);
+  transform: skewX(-20deg);
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+body::before { right: 30%; }
+body::after { right: 8%; width: 9%; background: rgb(255 107 44 / 0.12); }
+
+/* ---------- página ---------- */
+.pagina {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 400px);
+  align-items: center;
+  gap: clamp(2rem, 7vw, 7rem);
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: clamp(2rem, 6svh, 4rem) clamp(20px, 4.5vw, 56px);
+}
+
+/* ---------- apresentação ---------- */
+.intro > * { animation: sobe 0.8s var(--ease) both; }
+.intro > :nth-child(2) { animation-delay: 0.06s; }
+.intro > :nth-child(3) { animation-delay: 0.14s; }
+.intro > :nth-child(4) { animation-delay: 0.22s; }
+
+.eyebrow {
+  margin-bottom: 0.8rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.22em;
+  color: var(--laranja);
+}
+.eyebrow span { color: var(--apagado); }
+
+.titulo {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+}
+
+.descricao {
+  max-width: 40ch;
+  margin-bottom: 1.75rem;
+  color: var(--suave);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+.descricao::first-letter { text-transform: uppercase; }
+
+.atalhos { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+.atalhos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.03);
+  font-size: 0.9rem;
+  color: var(--suave);
+}
+kbd {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--laranja);
+  color: var(--laranja-tinta);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- calculadora ---------- */
+.calculadora {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+  border-radius: 28px;
+  background: linear-gradient(160deg, rgb(41 37 36 / 0.9), rgb(20 17 15 / 0.95));
+  border: 1px solid rgb(255 255 255 / 0.09);
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.85), 0 0 0 1px rgb(0 0 0 / 0.4);
+  animation: entra 0.9s var(--ease) 0.1s both;
+}
+/* filete laranja no topo */
+.calculadora::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--laranja), rgb(255 107 44 / 0.15));
+}
+
+/* visor */
+.visor {
+  padding: 2.25rem 1.75rem 1.5rem;
+  text-align: right;
+  border-bottom: 1px dashed rgb(255 255 255 / 0.12);
+  background: rgb(0 0 0 / 0.25);
+}
+.conta {
+  min-height: 1.6rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--apagado);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.display {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 9vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* números grandes diminuem para caber */
+.display.longo { font-size: clamp(2rem, 6.5vw, 2.7rem); }
+.display.resultado { color: var(--laranja); animation: pisca 0.45s var(--ease); }
+.display.erro { color: #fca5a5; font-size: clamp(1.6rem, 5vw, 2rem); }
+
+/* teclado */
+.teclado {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 1.5rem;
+}
+.tecla {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.15;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.05);
+  color: var(--texto);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s, border-color 0.2s, transform 0.12s var(--ease), color 0.2s;
+}
+.tecla:hover { background: rgb(255 255 255 / 0.1); border-color: rgb(255 255 255 / 0.16); }
+.tecla:active,
+.tecla.apertada { transform: scale(0.94); }
+.tecla:focus-visible { outline: 2px solid var(--laranja); outline-offset: 3px; }
+.tecla-dupla { grid-column: span 2; aspect-ratio: auto; }
+
+.tecla-funcao { color: var(--suave); font-size: 1.35rem; letter-spacing: 0.08em; }
+.tecla-funcao:hover { color: var(--texto); }
+
+.tecla-op { background: rgb(255 107 44 / 0.12); border-color: rgb(255 107 44 / 0.28); color: var(--laranja); font-size: 2rem; }
+.tecla-op:hover { background: rgb(255 107 44 / 0.2); border-color: rgb(255 107 44 / 0.5); }
+/* operação escolhida fica acesa até digitar o próximo número */
+.tecla-op.ativa { background: var(--laranja); border-color: var(--laranja); color: var(--laranja-tinta); }
+
+.tecla-igual {
+  grid-column: 1 / -1;
+  aspect-ratio: auto;
+  padding: 14px 0;
+  background: var(--laranja);
+  border-color: var(--laranja);
+  color: var(--laranja-tinta);
+  font-size: 2rem;
+  box-shadow: 0 18px 36px -18px var(--laranja);
+}
+.tecla-igual:hover { background: #ff8247; border-color: #ff8247; }
+/* brilho que atravessa o botão no hover */
+.tecla-igual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.35), transparent 70%);
+  transform: translateX(-110%);
+  transition: transform 0.6s var(--ease);
+}
+.tecla-igual:hover::after { transform: translateX(110%); }
+
+/* ---------- animações ---------- */
+@keyframes sobe { from { opacity: 0; transform: translateY(26px); } }
+@keyframes entra { from { opacity: 0; transform: translateX(50px) scale(0.97); } }
+@keyframes pisca { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- celular / tablet ---------- */
+@media (max-width: 820px) {
+  .pagina { grid-template-columns: 1fr; align-content: start; gap: 1.5rem; padding-top: 1.75rem; padding-bottom: 1.75rem; }
+  .tecla:not(.tecla-dupla, .tecla-igual) { aspect-ratio: 1.35; }
+  .titulo { font-size: clamp(2.8rem, 14vw, 4rem); margin-bottom: 0.8rem; }
+  .descricao { margin-bottom: 1.1rem; font-size: 1rem; }
+  .atalhos { display: none; }
+  .calculadora { width: 100%; max-width: 420px; justify-self: center; }
+}
+@media (max-width: 380px) {
+  .teclado { gap: 8px; padding: 1.1rem; }
+  .visor { padding: 1.75rem 1.25rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01s !important; }
+}

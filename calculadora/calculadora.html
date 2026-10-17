@@ -4,168 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>calculadora com tailwind css</title>
+    <meta name="theme-color" content="#0c0a09">
+    <title>calculadora</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="calculadora.css">
 </head>
 
-<body class="bg-black min-h-screen flex justify-center items-center">
+<body>
 
-    <!-- Calculadora -->
-    <div class="w-[260px] p-2 bg-red-950 rounded-lg shadow-lg">
+    <main class="pagina">
 
-        <!-- Display -->
-        <div id="display"
-            class="w-full bg-red-950 text-white text-right text-2xl p-3 overflow-hidden font-semibold">
-            0
-        </div>
+        <!-- apresentação -->
+        <section class="intro">
+            <p class="eyebrow">CALCULADORA <span>/ SIMPLES</span></p>
+            <h1 class="titulo">CALCULADORA</h1>
+            <p class="descricao">as quatro operações básicas, mais o resto da divisão, direto no navegador. clique nas teclas
+                ou use o teclado do computador.</p>
 
-        <!-- Botões -->
-        <div class="w-full flex flex-wrap py-2">
+            <ul class="atalhos" aria-label="atalhos do teclado">
+                <li><kbd>0–9</kbd> números</li>
+                <li><kbd>+ − × ÷</kbd> operações</li>
+                <li><kbd>Enter</kbd> resultado</li>
+                <li><kbd>Esc</kbd> limpar</li>
+            </ul>
+        </section>
 
-            <!-- Linha 1 -->
-            <div class="w-1/4 p-1">
-                <button value="%"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    %
-                </button>
+        <!-- calculadora -->
+        <section class="calculadora" aria-label="calculadora">
+
+            <!-- visor -->
+            <div class="visor">
+                <p id="conta" class="conta" aria-hidden="true">&nbsp;</p>
+                <p id="display" class="display" aria-live="polite">0</p>
             </div>
 
-            <div class="w-2/4 p-1">
-                <button value="c"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    C
+            <!-- teclas -->
+            <div class="teclado">
+                <button value="c" class="tecla tecla-funcao tecla-dupla" aria-label="limpar tudo">C</button>
+                <button value="%" class="tecla tecla-funcao" aria-label="resto da divisão">%</button>
+                <button value="backspace" class="tecla tecla-funcao" aria-label="apagar último número">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 5H9l-7 7 7 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z" />
+                        <path d="M17 9l-5 5M12 9l5 5" />
+                    </svg>
                 </button>
-            </div>
 
-            <div class="w-1/4 p-1">
-                <button value="backspace"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    <i class="bi bi-backspace"></i>
-                </button>
-            </div>
+                <button value="7" class="tecla">7</button>
+                <button value="8" class="tecla">8</button>
+                <button value="9" class="tecla">9</button>
+                <button value="/" class="tecla tecla-op" aria-label="dividir">÷</button>
 
-            <!-- Linha 2 -->
-            <div class="w-1/4 p-1">
-                <button value="7"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    7
-                </button>
-            </div>
+                <button value="4" class="tecla">4</button>
+                <button value="5" class="tecla">5</button>
+                <button value="6" class="tecla">6</button>
+                <button value="*" class="tecla tecla-op" aria-label="multiplicar">×</button>
 
-            <div class="w-1/4 p-1">
-                <button value="8"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    8
-                </button>
-            </div>
+                <button value="1" class="tecla">1</button>
+                <button value="2" class="tecla">2</button>
+                <button value="3" class="tecla">3</button>
+                <button value="-" class="tecla tecla-op" aria-label="subtrair">−</button>
 
-            <div class="w-1/4 p-1">
-                <button value="9"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    9
-                </button>
-            </div>
+                <button value="0" class="tecla tecla-dupla">0</button>
+                <button value="." class="tecla" aria-label="vírgula">,</button>
+                <button value="+" class="tecla tecla-op" aria-label="somar">+</button>
 
-            <div class="w-1/4 p-1">
-                <button value="/"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    ÷
-                </button>
+                <button value="=" class="tecla tecla-igual" aria-label="resultado">=</button>
             </div>
+        </section>
 
-            <!-- Linha 3 -->
-            <div class="w-1/4 p-1">
-                <button value="4"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    4
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="5"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    5
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="6"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    6
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="*"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    ×
-                </button>
-            </div>
-
-            <!-- Linha 4 -->
-            <div class="w-1/4 p-1">
-                <button value="1"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    1
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="2"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    2
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="3"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    3
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="-"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    -
-                </button>
-            </div>
-
-            <!-- Linha 5 -->
-            <div class="w-2/4 p-1">
-                <button value="0"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    0
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="."
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    .
-                </button>
-            </div>
-
-            <div class="w-1/4 p-1">
-                <button value="+"
-                    class="w-full bg-red-800 text-white py-2 rounded hover:bg-red-500 transition">
-                    +
-                </button>
-            </div>
-
-            <!-- Linha 6 -->
-            <div class="w-full p-1">
-                <button value="="
-                    class="w-full bg-black text-white py-2 rounded hover:bg-red-500 transition font-bold">
-                    =
-                </button>
-            </div>
-
-        </div>
-    </div>
+    </main>
 
     <script src="calculadora.js"></script>
 
