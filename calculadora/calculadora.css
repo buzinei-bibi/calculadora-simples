@@ -94,7 +94,6 @@ body::after { right: 8%; width: 9%; background: rgb(255 107 44 / 0.12); }
   font-size: 1.05rem;
   line-height: 1.6;
 }
-.descricao::first-letter { text-transform: uppercase; }
 
 .atalhos { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
 .atalhos li {
